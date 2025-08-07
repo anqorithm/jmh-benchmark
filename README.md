@@ -1,4 +1,4 @@
-# JMH Benchmark Demo
+# JMH Benchmark
 
 Simple example showing why `System.currentTimeMillis()` is inaccurate for benchmarking.
 
@@ -60,10 +60,17 @@ Benchmark                     Mode  Cnt    Score   Error  Units
 AccurateBenchmark.sumNumbers  avgt    5  256.476 ± 9.861  us/op
 ```
 
+### Benchmark Visualization
+
+![benchmark](/assets/jmh.png)
+
+
 ### Key Observations
 - **InaccurateBenchmark**: Shows inconsistent results (0-2 ms) due to timer resolution limitations
 - **AccurateBenchmark**: Provides precise measurement (256.476 ± 9.861 microseconds) with statistical confidence
 - JMH properly handles JVM warmup, JIT compilation effects, and provides statistical analysis
+
+
 
 ## License
 
