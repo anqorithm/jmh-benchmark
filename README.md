@@ -8,6 +8,10 @@ Simple example showing why `System.currentTimeMillis()` is inaccurate for benchm
 - [Files](#files)
 - [How to Run](#how-to-run)
 - [The Difference](#the-difference)
+- [JMH Benchmark Specifications](#jmh-benchmark-specifications)
+  - [Configuration Parameters](#configuration-parameters)
+  - [What These Parameters Mean](#what-these-parameters-mean)
+  - [Benchmark Setup](#benchmark-setup)
 - [Benchmark Results](#benchmark-results)
   - [InaccurateBenchmark (System.currentTimeMillis())](#inaccuratebenchmark-systemcurrenttimemillis)
   - [AccurateBenchmark (JMH)](#accuratebenchmark-jmh)
@@ -52,6 +56,37 @@ mvn exec:java -Dexec.mainClass="com.example.AccurateBenchmark"
 **Accurate:** Shows 264.519 ± 16.871 microseconds
 
 JMH handles warmup, multiple iterations, and statistics properly.
+
+## JMH Benchmark Specifications
+
+The JMH benchmarks in this project are configured with the following parameters to ensure accurate and reliable measurements:
+
+### Configuration Parameters
+
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| **@BenchmarkMode** | Mode.AverageTime | Measures average time per operation |
+| **@OutputTimeUnit** | TimeUnit.NANOSECONDS | Reports results in nanoseconds for precision |
+| **@State** | Scope.Benchmark | Benchmark state shared across all threads |
+| **@Fork** | value=2, jvmArgs={"-Xms2G", "-Xmx2G"} | 2 JVM forks with 2GB heap for isolation |
+| **@Warmup** | iterations=5, time=1s | 5 warmup iterations, 1 second each |
+| **@Measurement** | iterations=10, time=1s | 10 measurement iterations, 1 second each |
+| **@Threads** | 1 | Single-threaded execution |
+
+### What These Parameters Mean
+
+- **Fork**: Runs benchmarks in 2 separate JVM instances to isolate measurements from JVM startup effects and ensure statistical reliability. Each fork uses a fixed 2GB heap size to prevent GC variability
+- **Warmup**: Allows the JIT compiler to optimize the code before actual measurements begin, eliminating cold-start bias
+- **Measurement**: The actual benchmarking phase where performance data is collected
+- **OutputTimeUnit**: Nanoseconds provide microsecond-level precision for fast operations
+- **State**: Manages benchmark state lifecycle with `@Setup` and `@TearDown` methods
+
+### Benchmark Setup
+
+The benchmark uses a `@Setup` method to initialize test data:
+- Creates a 10,000-element integer array with random values
+- Uses a fixed seed (42) for reproducible results
+- Runs before benchmark iterations begin
 
 ## Benchmark Results
 

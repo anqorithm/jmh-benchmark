@@ -11,7 +11,7 @@ import java.util.Random;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Benchmark)
-@Fork(0)
+@Fork(value = 2, jvmArgs = {"-Xms2G", "-Xmx2G"})
 @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)
