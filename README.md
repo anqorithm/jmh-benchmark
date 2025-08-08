@@ -2,6 +2,32 @@
 
 Simple example showing why `System.currentTimeMillis()` is inaccurate for benchmarking.
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Files](#files)
+- [How to Run](#how-to-run)
+- [The Difference](#the-difference)
+- [Benchmark Results](#benchmark-results)
+  - [InaccurateBenchmark (System.currentTimeMillis())](#inaccuratebenchmark-systemcurrenttimemillis)
+  - [AccurateBenchmark (JMH)](#accuratebenchmark-jmh)
+  - [Performance Comparison Charts](#performance-comparison-charts)
+  - [Key Observations](#key-observations)
+- [Examples](#examples)
+  - [Example 1: Fibonacci Calculation (Recursive)](#example-1-fibonacci-calculation-recursive)
+  - [Example 2: Sorting Arrays](#example-2-sorting-arrays)
+  - [Example 3: Simple Sum](#example-3-simple-sum)
+  - [Why These Examples Show the Problem](#why-these-examples-show-the-problem)
+- [Conclusion](#conclusion)
+- [Author](#author)
+- [License](#license)
+
+## Introduction
+
+Many developers use `System.currentTimeMillis()` to measure how fast their code runs, but this method has serious problems. This project shows why the old way of timing code doesn't work well and how JMH (Java Microbenchmark Harness) gives you accurate results.
+
+You'll see real examples that compare the basic timing method with JMH's better approach. You'll learn why your current measurements might be wrong and how to get results you can trust.
+
 ## Files
 
 - `InaccurateBenchmark.java` - Uses System.currentTimeMillis() (unreliable)
@@ -112,7 +138,7 @@ AccurateBenchmark.sumNumbers  avgt   20   255269.231 ±  2623.039  ns/op
 - **AccurateBenchmark**: Provides precise measurement (256.476 ± 9.861 microseconds) with statistical confidence
 - JMH properly handles JVM warmup, JIT compilation effects, and provides statistical analysis
 
-## Complex Algorithm Examples
+## Examples
 
 ### Example 1: Fibonacci Calculation (Recursive)
 
@@ -173,7 +199,11 @@ AccurateBenchmark.sumNumbers  avgt   20  255269.231 ± 2623.039  ns/op
 3. **Statistical Analysis**: JMH provides confidence intervals and error margins, showing measurement reliability
 4. **Consistent Environment**: JMH controls for external factors that affect timing measurements
 
+## Conclusion
 
+This project shows why you should never use `System.currentTimeMillis()` to test how fast your Java code runs. The difference is huge: the old method can show 0ms for operations that actually take hundreds of microseconds, while JMH gives you exact measurements you can trust.
+
+When you use JMH, you get accurate results that help you make your code faster. It handles all the complex stuff like JVM warmup and gives you real numbers instead of guesses. This means you can actually improve your code's speed instead of wasting time on bad measurements.
 
 ## Author
 
